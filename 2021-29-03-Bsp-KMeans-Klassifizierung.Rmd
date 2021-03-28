@@ -1,0 +1,42 @@
+---
+title: "Klassifizierung"
+author: "Patricia Bauer"
+date: "21 3 2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(raster) #load raster package
+image <- stack("2019-01-17-00_00_2019-01-17-23_59_Sentinel-2_L2A_True_color.tiff")
+
+
+#execute the kMeans function on the image values (indicated by the squared bracket) 
+#and search for 6 clusters (centers = 6)
+kMeansResult <- kmeans(image[], centers=12)
+
+#create a dummy raster using the first layer of our image 
+#and replace the values of the dummy raster with the clusters (classes) of the kMeans classification
+result <- raster(image[[1]])
+result <- setValues(result, kMeansResult$cluster)
+
+#plot the result
+plot(result)
+
+plot(result, col=c("darkgreen", "darkgreen","blue",
+ "orange", "orange","orange"))
+```
+
+
+
+
+
+
+
+
+
+
+
